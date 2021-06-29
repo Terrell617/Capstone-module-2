@@ -68,7 +68,8 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	}
 
 	private void viewCurrentBalance() {
-		// TODO Auto-generated method stub
+    	System.out.println("Your current account balance is: $"+currentUser.getBalance(9999.99));
+
 		
 	}
 
@@ -83,7 +84,9 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	}
 
 	private void sendBucks() {
-		// TODO Auto-generated method stub
+    	double transferAmount = 0;
+    	currentUser.getBalance()- transferAmount;
+    	
 		
 	}
 
