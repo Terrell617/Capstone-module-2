@@ -6,8 +6,8 @@ public class AuthenticatedUser {
 	
 	private String token;
 	private User user;
-	private double balance;
-	private double amount;
+	private BigDecimal balance;
+	private BigDecimal amount;
 	
 	public String getToken() {
 		return token;
@@ -27,7 +27,7 @@ public class AuthenticatedUser {
 		return this.balance = balance;
 	}
 
-	public double getTransferAmount(double amount){
+	public BigDecimal getTransferAmount(BigDecimal amount){
 		return this.amount = amount;
 
 	}
