@@ -45,11 +45,11 @@ public class Transfer {
         this.account_to = account_to;
     }
 
-
     public BigDecimal getAmount() {
         return amount;
     }
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+
 }

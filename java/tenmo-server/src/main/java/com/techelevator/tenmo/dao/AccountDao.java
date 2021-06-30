@@ -10,5 +10,6 @@ public interface AccountDao {
 
     BigDecimal subtractFromBalance(BigDecimal amountToWithdraw, int accountId);
 
-    void updateAccountBalance(AccountDao accountDao);
+    int getAccountIdFromUsername(String username);
+
 }

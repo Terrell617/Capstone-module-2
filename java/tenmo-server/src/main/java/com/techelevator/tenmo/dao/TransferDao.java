@@ -7,7 +7,9 @@ import java.security.Principal;
 
 public interface TransferDao {
 
-    int findIdByUsername(String userName);
+    String sendTransfer(int userFrom, int userTo, BigDecimal amount);
+
+    Transfer findIdByUsername(String userName);
 
     BigDecimal createTransfer(Transfer newTransfer, Principal principal);
 
