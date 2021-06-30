@@ -6,8 +6,8 @@ public class Transfer {
     private int transfer_id;
     private int transfer_type_id;
     private int transfer_status_id;
-    private int amount_from;
-    private int amount_to;
+    private int account_from;
+    private int account_to;
     private BigDecimal amount;
 
     public int getTransfer_id(){
@@ -31,18 +31,18 @@ public class Transfer {
         this.transfer_status_id = transfer_status_id;
     }
 
-    public int getAmount_from(){
-        return amount_from;
+    public int getAccount_from(){
+        return account_from;
     }
-    public void setAmount_from(int amount_from){
-        this.amount_from = amount_from;
+    public void setAccount_from(int account_from){
+        this.account_from = account_from;
     }
 
-    public int getAmount_to(){
+    public int getAccount_to(){
         return transfer_id;
     }
-    public void setAmount_to(int amount_to){
-        this.amount_to = amount_to;
+    public void setAccount_to(int account_to){
+        this.account_to = account_to;
     }
 
 
