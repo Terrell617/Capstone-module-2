@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -64,6 +66,25 @@ public class JdbcTransferDao implements TransferDao {
             return mapRowToTransfer(rowSet);
         }
         throw new UsernameNotFoundException("User " + username + " was not found.");
+    }
+
+    @Override
+    public List<Transfer> listAllTransfers(int userId) {
+        List<Transfer> list = new ArrayList<>();
+        String sql = "Select *, u.username AS userFrom, v.username AS userTo FROM transfers "+
+                "INNER JOIN accounts a ON transfer.account_from = a.account_id "+
+                "INNER JOIN accounts b ON transfer.account_to = b.account_id "+
+                "INNER JOIN users u ON a.user_id = u.user_id "+
+                "INNER JOIN users v ON b.user_id = v.user_id "+
+                "WHERE a.user_id =? OR b.user_id = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, userId);
+        while( results.next()) {
+            Transfer transfer = mapRowToTransfer(results);
+            list.add(transfer);
+        }
+                return list;
+
+
     }
 
 
