@@ -4,6 +4,7 @@ import com.techelevator.tenmo.model.Transfer;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.List;
 
 public interface TransferDao {
 
@@ -14,6 +15,7 @@ public interface TransferDao {
     Transfer findIdByUsername(String userName);
 
 
+    List<Transfer> listAllTransfers(int userId);
 
 
 
