@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.Map;
 
 @Component
 public class JdbcTransferDao implements TransferDao {
@@ -50,6 +51,12 @@ public class JdbcTransferDao implements TransferDao {
         }
         throw new UsernameNotFoundException("User " + username + " was not found.");
     }
+
+    @Override
+    public BigDecimal createTransfer(Transfer newTransfer, Principal principal) {
+        return null;
+    }
+
 
     private BigDecimal getTransfer(int newTransferId) {
         return null;
