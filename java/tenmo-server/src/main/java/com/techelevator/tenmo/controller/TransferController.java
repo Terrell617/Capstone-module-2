@@ -26,20 +26,25 @@ public class TransferController {
         this.transferDao = transferDao;
     }
 
+
+
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/transfer", method = RequestMethod.POST)
-    public void transferAmount(@RequestBody Transfer transfer, Principal principal) {
+    public String sendTransferRequest(@RequestBody Transfer transfer, Principal principal) {
         String loggedInUserName = principal.getName();
         int accountId = accountDao.getAccountIdFromUsername(loggedInUserName);
-        if (accountId == transfer.getAccount_from() && accountId != transfer.getAccount_to()) {
-
-        }
+       // int accountTo = transfer.getAccount_to();
+        int accountFromUserId = transfer.getAccount_from();
+        int accountFrom = accountDao.getAccountIdByUserId(accountFromUserId);
+        if (accountId != accountFrom) {
+        String results = transferDao.requestTransfer(accountFrom, accountId,transfer.getAmount());
+        return results;
+        } return "Cannot request money from own account or request to account that isn't yours.";
     }
 
     @RequestMapping(path = "/transfer/userlist", method = RequestMethod.GET)
-    public Map<> findAll(Principal principal){
+    public List<User> findAll(Principal principal){
         return userDao.findAll(principal.getName());
     }
-
 
 }

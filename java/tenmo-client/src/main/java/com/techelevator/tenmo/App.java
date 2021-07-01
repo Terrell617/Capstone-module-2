@@ -84,9 +84,6 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	}
 
 	private void sendBucks() {
-    	double transferAmount = 0;
-    	currentUser.getBalance()- transferAmount;
-    	
 		
 	}
 

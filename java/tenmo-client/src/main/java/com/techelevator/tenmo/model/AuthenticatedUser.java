@@ -23,7 +23,7 @@ public class AuthenticatedUser {
 	}
 
 
-	public double getBalance(double balance) {
+	public BigDecimal getBalance(BigDecimal balance) {
 		return this.balance = balance;
 	}
 

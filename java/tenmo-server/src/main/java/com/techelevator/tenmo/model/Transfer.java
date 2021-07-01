@@ -39,7 +39,7 @@ public class Transfer {
     }
 
     public int getAccount_to(){
-        return transfer_id;
+        return account_to;
     }
     public void setAccount_to(int account_to){
         this.account_to = account_to;

@@ -9,9 +9,10 @@ public interface TransferDao {
 
     String sendTransfer(int userFrom, int userTo, BigDecimal amount);
 
+    String requestTransfer(int userFrom, int userTo, BigDecimal amount);
+
     Transfer findIdByUsername(String userName);
 
-    BigDecimal createTransfer(Transfer newTransfer, Principal principal);
 
 
 

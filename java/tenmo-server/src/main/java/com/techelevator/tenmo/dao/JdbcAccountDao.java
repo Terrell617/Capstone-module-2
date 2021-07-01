@@ -3,17 +3,19 @@ package com.techelevator.tenmo.dao;
 import com.techelevator.tenmo.model.Account;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
+@Component
 public class JdbcAccountDao implements AccountDao {
 
     private JdbcTemplate jdbcTemplate;
 
-    public JdbcAccountDao(){}
+    //public JdbcAccountDao(){}
 
     public JdbcAccountDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = new JdbcTemplate();
+        this.jdbcTemplate = jdbcTemplate;
     }
 
 
@@ -52,9 +54,23 @@ public class JdbcAccountDao implements AccountDao {
         String sql = "SELECT account_id FROM accounts " +
                 "INNER JOIN users ON users.user_id = accounts.user_id " +
                 "WHERE username = ?;";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username);
-        if (results.next()){
-            accountId = results.getInt("account_id");
+        try {
+            accountId = jdbcTemplate.queryForObject(sql, Integer.class, username);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return accountId;
+    }
+
+    @Override
+    public int getAccountIdByUserId(int userId) {
+        int accountId = 0;
+        String sql = "SELECT account_id FROM accounts " +
+                "WHERE user_id = ?;";
+        try {
+            accountId = jdbcTemplate.queryForObject(sql, Integer.class, userId);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
         return accountId;
     }

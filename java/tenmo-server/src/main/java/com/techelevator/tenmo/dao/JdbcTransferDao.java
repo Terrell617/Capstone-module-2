@@ -39,8 +39,22 @@ public class JdbcTransferDao implements TransferDao {
             return "Transaction failed due to insufficient funds.";
         }
     }
-
     @Override
+    public String requestTransfer(int userFrom, int userTo, BigDecimal amount) {
+        if (userFrom == userTo) {
+            return "Can't request money from yourself.";
+        }
+        if (amount.compareTo(new BigDecimal(0)) == 1) {
+            String sql = "INSERT INTO transfers(transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
+                    "VALUES(1,1,?,?,?);";
+            jdbcTemplate.update(sql, userFrom, userTo, amount);
+            return "Request was sent.";
+        } else {
+            return "There was a problem sending the request.";
+        }
+    }
+
+        @Override
     public Transfer findIdByUsername(String username) throws UsernameNotFoundException {
         String sql = "SELECT username FROM users " +
                 "INNER JOIN accounts ON users.user_id = accounts.user_id " +
@@ -52,15 +66,6 @@ public class JdbcTransferDao implements TransferDao {
         throw new UsernameNotFoundException("User " + username + " was not found.");
     }
 
-    @Override
-    public BigDecimal createTransfer(Transfer newTransfer, Principal principal) {
-        return null;
-    }
-
-
-    private BigDecimal getTransfer(int newTransferId) {
-        return null;
-    }
 
     private Transfer mapRowToTransfer(SqlRowSet rowSet) {
         Transfer transfer = new Transfer();
