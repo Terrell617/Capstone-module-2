@@ -52,5 +52,27 @@ public class TransferController {
         return allTransfers;
     }
 
+    @RequestMapping(path = "/transfer/{id}", method = RequestMethod.GET)
+    public Transfer getSelectedTransfer(@PathVariable int id) {
+        Transfer transfer = transferDao.findTransferById(id);
+        return transfer;
+    }
+
+    @RequestMapping(path = "/request", method = RequestMethod.POST)
+    public String requestTransferRequest(@RequestBody Transfer transfer) {
+        String results = transferDao.requestTransfer(transfer.getAccount_from(),transfer.getAccount_to(),transfer.getAmount());
+        return results;
+    }
+    @RequestMapping(path = "/request/{id}", method = RequestMethod.GET)
+    public List<Transfer> allTransferRequests(@RequestBody int id) {
+        List<Transfer> specificTransfer = transferDao.pendingRequests(id);
+        return specificTransfer;
+    }
+
+    @RequestMapping(path = "/transfer/status/{statusId}",method = RequestMethod.PUT)
+    public String updateRequest(@RequestBody Transfer transfer,@PathVariable int statusId) {
+        String output = transferDao.updateTransferRequest(transfer, statusId);
+        return output;
+    }
 
 }

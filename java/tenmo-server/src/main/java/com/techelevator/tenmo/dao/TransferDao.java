@@ -23,6 +23,8 @@ public interface TransferDao {
     List<Transfer> pendingRequests(int userId);
 
     Transfer findTransferById(int transactionId);
+
+    String updateTransferRequest(Transfer transfer, int statusId);
     }
 
 

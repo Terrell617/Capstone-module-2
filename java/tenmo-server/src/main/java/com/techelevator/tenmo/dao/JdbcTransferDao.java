@@ -122,6 +122,24 @@ public class JdbcTransferDao implements TransferDao {
         return transfer;
     }
 
+    @Override
+    public String updateTransferRequest(Transfer transfer, int statusId) {
+        if (statusId == 3) {
+            String sql = "UPDATE transfers SET transfer_status_id = ? WHERE transfer_id = ?;";
+            jdbcTemplate.update(sql,statusId,transfer.getTransfer_id());
+            return "Successful update.";
+        }
+        if (!(accountDao.getBalance(transfer.getAccount_from()).compareTo(transfer.getAmount()) == -1)) {
+            String sql = "UPDATE transfers SET transfer_status_id = ? WHERE transfer_id = ?;";
+            jdbcTemplate.update(sql, statusId,transfer.getTransfer_id());
+            accountDao.addToBalance(transfer.getAmount(),transfer.getAccount_to());
+            accountDao.subtractFromBalance(transfer.getAmount(),transfer.getAccount_from());
+            return "Successfully updated balance.";
+        } else {
+            return "Insufficient funds in account from. Please deposit money into your account.";
+        }
+    }
+
     private Transfer mapRowToTransfer (SqlRowSet rowSet){
             Transfer transfer = new Transfer();
             transfer.setTransfer_id(rowSet.getInt("transfer_id"));
