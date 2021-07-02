@@ -6,8 +6,6 @@ public class User {
 
     private Integer id;
     private String username;
-    private BigDecimal balance;
-
 
     public Integer getId() {
         return id;

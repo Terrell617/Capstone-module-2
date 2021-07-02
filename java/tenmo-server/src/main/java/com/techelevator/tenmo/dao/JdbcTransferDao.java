@@ -72,8 +72,8 @@ public class JdbcTransferDao implements TransferDao {
     @Override
     public List<Transfer> listAllTransfers(int userId) {
         List<Transfer> list = new ArrayList<>();
-<<<<<<< HEAD
-        String sql = "SELECT t.*, u.username AS userFrom, v.username AS userTo FROM transfers " +
+
+        String sql = "SELECT t.*, u.username AS userFrom, v.username AS userTo FROM transfers t " +
                 "INNER JOIN accounts a ON t.account_from = a.account_id " +
                 "INNER JOIN accounts b on t.account_to = b.account_id " +
                 "INNER JOIN users u ON a.user_id = u.user_id " +
@@ -85,34 +85,52 @@ public class JdbcTransferDao implements TransferDao {
             list.add(transfer);
         }
         return list;
-=======
-        String sql = "Select *, u.username AS userFrom, v.username AS userTo FROM transfers "+
-                "INNER JOIN accounts a ON transfer.account_from = a.account_id "+
-                "INNER JOIN accounts b ON transfer.account_to = b.account_id "+
-                "INNER JOIN users u ON a.user_id = u.user_id "+
-                "INNER JOIN users v ON b.user_id = v.user_id "+
-                "WHERE a.user_id =? OR b.user_id = ?;";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, userId);
-        while( results.next()) {
-            Transfer transfer = mapRowToTransfer(results);
-            list.add(transfer);
-        }
-                return list;
-
-
->>>>>>> bcb34e3bf748c579a24740004f3f854fa4b627d6
     }
 
+    @Override
+    public List<Transfer> pendingRequests(int userId) {
+        List<Transfer> pendingList = new ArrayList<>();
+        String sql = "SELECT t.*, u.username AS userFrom, v.username AS userTo FROM transfers t " +
+                "INNER JOIN accounts a ON t.account_from = a.account_id " +
+                "INNER JOIN accounts b on t.account_to = b.account_id " +
+                "INNER JOIN users u ON a.user_id = u.user_id " +
+                "INNER JOIN users v ON b.user_id = v.user_id " +
+                "WHERE transfer_status_id = 1 AND (account_from  = ? OR account_to = ?);";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, userId);
+        while (results.next()) {
+            Transfer transfer = mapRowToTransfer(results);
+            pendingList.add(transfer);
+        }
+        return pendingList;
+    }
 
-    private Transfer mapRowToTransfer(SqlRowSet rowSet) {
+    @Override
+    public Transfer findTransferById(int transactionId) {
         Transfer transfer = new Transfer();
-        transfer.setTransfer_id(rowSet.getInt("transfer_id"));
-        transfer.setTransfer_type_id(rowSet.getInt("transfer_type_id"));
-        transfer.setTransfer_status_id(rowSet.getInt("transfer_status_id"));
-        transfer.setAccount_to(rowSet.getInt("account_to"));
-        transfer.setAccount_from(rowSet.getInt("account_from"));
-        transfer.setAmount(rowSet.getBigDecimal("amount"));
+        String sql = "SELECT t.*,u.username AS userFrom, v.username AS userTo, tt.transfer_type_desc, ts.transfer_status_desc FROM transfers t" +
+                "INNER JOIN accounts a ON t.account_from = a.account_id " +
+                "INNER JOIN accounts b on t.account_to = b.account_id " +
+                "INNER JOIN users u ON a.user_id = u.user_id " +
+                "INNER JOIN users v ON b.user_id = v.user_id " +
+                "INNER JOIN transfer_statuses ts ON t.transfer_status_id = ts.transfer_status_id " +
+                "INNER JOIN transfer_type tt ON t.transfer_type_id = tt.transfer_type_id " +
+                "WHERE t.transfer_id = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, transactionId);
+        if (results.next()) {
+            transfer = mapRowToTransfer(results);
+        }
         return transfer;
     }
+
+    private Transfer mapRowToTransfer (SqlRowSet rowSet){
+            Transfer transfer = new Transfer();
+            transfer.setTransfer_id(rowSet.getInt("transfer_id"));
+            transfer.setTransfer_type_id(rowSet.getInt("transfer_type_id"));
+            transfer.setTransfer_status_id(rowSet.getInt("transfer_status_id"));
+            transfer.setAccount_to(rowSet.getInt("account_to"));
+            transfer.setAccount_from(rowSet.getInt("account_from"));
+            transfer.setAmount(rowSet.getBigDecimal("amount"));
+            return transfer;
+        }
 
 }

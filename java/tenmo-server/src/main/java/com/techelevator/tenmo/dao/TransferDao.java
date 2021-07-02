@@ -4,13 +4,11 @@ import com.techelevator.tenmo.model.Transfer;
 
 import java.math.BigDecimal;
 import java.security.Principal;
-<<<<<<< HEAD
 import java.util.List;
-=======
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
->>>>>>> bcb34e3bf748c579a24740004f3f854fa4b627d6
+
 
 public interface TransferDao {
 
@@ -21,7 +19,11 @@ public interface TransferDao {
     Transfer findIdByUsername(String userName);
 
     List<Transfer> listAllTransfers(int userId);
+
+    List<Transfer> pendingRequests(int userId);
+
+    Transfer findTransferById(int transactionId);
     }
 
-    List<Transfer> listAllTransfers(int userId);
+
 

@@ -33,7 +33,6 @@ public class TransferController {
     public String sendTransferRequest(@RequestBody Transfer transfer, Principal principal) {
         String loggedInUserName = principal.getName();
         int accountId = accountDao.getAccountIdFromUsername(loggedInUserName);
-       // int accountTo = transfer.getAccount_to();
         int accountFromUserId = transfer.getAccount_from();
         int accountFrom = accountDao.getAccountIdByUserId(accountFromUserId);
         if (accountId != accountFrom) {
@@ -46,5 +45,12 @@ public class TransferController {
     public List<User> findAll(Principal principal){
         return userDao.findAll(principal.getName());
     }
+
+    @RequestMapping(path = "/account/transfer/{id}", method = RequestMethod.GET)
+    public List<Transfer> findAllTransfers(@PathVariable int id) {
+        List<Transfer> allTransfers = transferDao.listAllTransfers(id);
+        return allTransfers;
+    }
+
 
 }
