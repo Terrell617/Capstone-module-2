@@ -72,6 +72,7 @@ public class JdbcTransferDao implements TransferDao {
     @Override
     public List<Transfer> listAllTransfers(int userId) {
         List<Transfer> list = new ArrayList<>();
+<<<<<<< HEAD
         String sql = "SELECT t.*, u.username AS userFrom, v.username AS userTo FROM transfers " +
                 "INNER JOIN accounts a ON t.account_from = a.account_id " +
                 "INNER JOIN accounts b on t.account_to = b.account_id " +
@@ -84,6 +85,22 @@ public class JdbcTransferDao implements TransferDao {
             list.add(transfer);
         }
         return list;
+=======
+        String sql = "Select *, u.username AS userFrom, v.username AS userTo FROM transfers "+
+                "INNER JOIN accounts a ON transfer.account_from = a.account_id "+
+                "INNER JOIN accounts b ON transfer.account_to = b.account_id "+
+                "INNER JOIN users u ON a.user_id = u.user_id "+
+                "INNER JOIN users v ON b.user_id = v.user_id "+
+                "WHERE a.user_id =? OR b.user_id = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, userId);
+        while( results.next()) {
+            Transfer transfer = mapRowToTransfer(results);
+            list.add(transfer);
+        }
+                return list;
+
+
+>>>>>>> bcb34e3bf748c579a24740004f3f854fa4b627d6
     }
 
 
