@@ -1,6 +1,7 @@
 package com.techelevator.tenmo;
 
 import com.techelevator.tenmo.model.AuthenticatedUser;
+import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.UserCredentials;
 import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.AuthenticationService;
@@ -84,22 +85,21 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	private void viewTransferHistory() {
 		TransferService ts = new TransferService(API_BASE_URL, currentUser);
 		ts.transferList();
-		// TODO Auto-generated method stub
-		
 	}
 
 	private void viewPendingRequests() {
-    	//TransferService
-		// TODO Auto-generated method stub
-		
+    	TransferService ts = new TransferService(API_BASE_URL, currentUser);
+    	ts.transfersRequestList();
 	}
 
 	private void sendBucks() {
-		
+		TransferService ts = new TransferService(API_BASE_URL, currentUser);
+		ts.sendBucks();
 	}
 
 	private void requestBucks() {
-		// TODO Auto-generated method stub
+		TransferService ts = new TransferService(API_BASE_URL,currentUser);
+		ts.requestBucks();
 		
 	}
 	

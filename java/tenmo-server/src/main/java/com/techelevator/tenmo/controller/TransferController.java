@@ -75,6 +75,4 @@ public class TransferController {
         return output;
     }
 
-    //@RequestMapping(path = "/transfer")
-
 }
