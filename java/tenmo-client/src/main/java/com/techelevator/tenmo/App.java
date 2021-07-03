@@ -89,7 +89,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	}
 
 	private void viewPendingRequests() {
-    	TransferService 
+    	//TransferService
 		// TODO Auto-generated method stub
 		
 	}

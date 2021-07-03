@@ -41,13 +41,13 @@ public class TransferController {
         } return "Cannot request money from own account or request to account that isn't yours.";
     }
 
-    @RequestMapping(path = "/transfer/userlist", method = RequestMethod.GET)
+    @RequestMapping(path = "/transfer/users", method = RequestMethod.GET)
     public List<User> findAll(Principal principal){
         return userDao.findAll(principal.getName());
     }
 
     @RequestMapping(path = "/account/transfer/{id}", method = RequestMethod.GET)
-    public List<Transfer> findAllTransfers(@PathVariable int id) {
+    public List<Transfer> listAllTransfers(@PathVariable int id) {
         List<Transfer> allTransfers = transferDao.listAllTransfers(id);
         return allTransfers;
     }
@@ -74,5 +74,7 @@ public class TransferController {
         String output = transferDao.updateTransferRequest(transfer, statusId);
         return output;
     }
+
+    //@RequestMapping(path = "/transfer")
 
 }

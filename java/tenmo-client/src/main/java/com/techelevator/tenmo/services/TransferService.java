@@ -24,7 +24,7 @@ public class TransferService {
     public Transfer[] transferList() {
         Transfer[] output = null;
         try {
-            output = restTemplate.exchange(BASE_URL + "/account/transfer/" + currentUser.getUser().getId(), HttpMethod.GET, makeAuthEntity(), Transfer[].class).getBody();
+            output = restTemplate.exchange(BASE_URL + "account/transfer/" + currentUser.getUser().getId(), HttpMethod.GET, makeAuthEntity(), Transfer[].class).getBody();
             System.out.println("------------------------------------------\n" +
                     "Transfers\n" +
                     "ID        From/To          Amount\n" +
@@ -40,7 +40,7 @@ public class TransferService {
                     fromOrTo = "To: ";
                     name = t.getUserFrom();
                 }
-                System.out.println(t.getTransferId() + fromOrTo + name + "$" + t.getAmount());
+                System.out.println(t.getTransferId()+"       " + fromOrTo + name +"           "+ "$" + t.getAmount());
             }
             System.out.println("------------------------\n" +
                     "Please Enter Transfer Id to View Details (0 to cancel): ");
@@ -48,7 +48,6 @@ public class TransferService {
             String input = scanner.nextLine();
             if (Integer.parseInt(input) != 0) {
                 boolean doesTransferIdExist = false;
-                System.out.println("Must Be Valid Transfer");
                 for (Transfer t : output) {
                     if (Integer.parseInt(input) == t.getTransferId()) {
                         Transfer newOutput = restTemplate.exchange(BASE_URL + "transfer/" + t.getTransferId(), HttpMethod.GET, makeAuthEntity(), Transfer.class).getBody();

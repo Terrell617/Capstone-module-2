@@ -78,7 +78,7 @@ public class JdbcTransferDao implements TransferDao {
                 "INNER JOIN accounts b on t.account_to = b.account_id " +
                 "INNER JOIN users u ON a.user_id = u.user_id " +
                 "INNER JOIN users v ON b.user_id = v.user_id " +
-                "WHERE a.user_id ? OR b.user_id = ?;";
+                "WHERE a.user_id = ? OR b.user_id = ?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, userId);
         while (results.next()) {
             Transfer transfer = mapRowToTransfer(results);
