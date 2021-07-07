@@ -141,7 +141,7 @@ public class TransferService {
         Transfer transfer = new Transfer();
         try {
             Scanner scanner = new Scanner(System.in);
-            users = restTemplate.exchange(BASE_URL + "listusers", HttpMethod.GET, makeAuthEntity(), User[].class).getBody();
+            users = restTemplate.exchange(BASE_URL + "transfer/users", HttpMethod.GET, makeAuthEntity(), User[].class).getBody();
             System.out.println("-------------------------------------------\r\n" +
                     "Users\r\n" +
                     "ID\t\tName\r\n" +
@@ -162,7 +162,7 @@ public class TransferService {
                 } catch (NumberFormatException e) {
                     System.out.println("Error when entering amount");
                 }
-                String output = restTemplate.exchange(BASE_URL + "transfer/", HttpMethod.POST, makeTransferEntity(transfer), String.class).getBody();
+                String output = restTemplate.exchange(BASE_URL + "account/transfer/", HttpMethod.POST, makeTransferEntity(transfer), String.class).getBody();
                 System.out.println(output);
             }
         } catch (Exception e) {
@@ -175,7 +175,7 @@ public class TransferService {
         Transfer transfer = new Transfer();
         try {
             Scanner scanner = new Scanner(System.in);
-            users = restTemplate.exchange(BASE_URL + "listusers", HttpMethod.GET, makeAuthEntity(), User[].class).getBody();
+            users = restTemplate.exchange(BASE_URL + "transfer/users/", HttpMethod.GET, makeAuthEntity(), User[].class).getBody();
             System.out.println("-------------------------------------------\r\n" +
                     "Users\r\n" +
                     "ID\t\tName\r\n" +
@@ -196,7 +196,7 @@ public class TransferService {
                 } catch (NumberFormatException e) {
                     System.out.println("Error when entering amount" + e.getMessage());
                 }
-                String output = restTemplate.exchange(BASE_URL + "/request", HttpMethod.POST, makeTransferEntity(transfer), String.class).getBody();
+                String output = restTemplate.exchange(BASE_URL + "request/", HttpMethod.POST, makeTransferEntity(transfer), String.class).getBody();
                 System.out.println(output);
             }
         } catch (Exception e) {

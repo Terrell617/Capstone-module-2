@@ -64,7 +64,7 @@ public class TransferController {
         return results;
     }
     @RequestMapping(path = "/request/{id}", method = RequestMethod.GET)
-    public List<Transfer> allTransferRequests(@RequestBody int id) {
+    public List<Transfer> allTransferRequests(@RequestBody @PathVariable int id) {
         List<Transfer> specificTransfer = transferDao.pendingRequests(id);
         return specificTransfer;
     }
